@@ -79,7 +79,7 @@ textarea {
 }
 ._form-08-main-login{
   background:rgb(0, 0, 0);
-  width:500px;
+  width:600px;
   max-width:100%;
   border-radius:14px;
   display:block;
@@ -110,6 +110,13 @@ textarea {
   text-align:right;
   overflow:hidden;
 }
+._form-08-head-login{
+  
+  padding:20px 100px;
+  display:block;
+  text-align:center;
+  overflow:hidden;
+}
 
 .sub-01{
     position: absolute;
@@ -117,7 +124,13 @@ textarea {
 }
 
 ._form-08-head h2{
-  font-size:30px;
+  font-size:45px;
+  font-weight:600;
+  color:#fff;
+  letter-spacing:0.3px;
+}
+._form-08-head-login h2{
+  font-size:23px;
   font-weight:600;
   color:#fff;
   letter-spacing:0.3px;
@@ -127,12 +140,23 @@ textarea {
   padding:20px 140px;
   float: right;
   display:block;
-  width:100%;
+  width:80%;
   position: inherit;
-  padding-top: 0px;
+  padding-top: 20px;
+}
+.form-group-login{
+  padding:20px 140px;
+  display:block;
+  width:100%;
+  position: relative;
+  padding-top: 20px;
 }
 
 .form-group label, p{
+  margin:10px 0px;
+  color: #FCF5CC;
+}
+.form-group-login label, p{
   margin:10px 0px;
   color: #FCF5CC;
 }
@@ -155,11 +179,27 @@ textarea {
   justify-content:space-around;
 }
 
+.logo{
+  display: inline-block;
+  box-sizing: content-box;
+  width: 300px;
+}
+
 ._btn_04{
   width:200px;
   display:block;
   float: right;
   margin:20px auto;
+  padding:10px 15px;
+  background:#c74aca;
+  text-align:center;
+  border-radius:6px;
+  cursor:pointer;
+}
+._btn_04-login{
+  width:200px;
+  display:block;
+  margin:0px auto;
   padding:10px 15px;
   background:#c74aca;
   text-align:center;
