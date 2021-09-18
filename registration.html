@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STUDENT DASHBOARD</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="assets/css/register.css">
+<link href="//bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link href="//bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <img src="assets/images/Orm1.png" class="img-responsive" style="height:40px;width: 100px;">
+    &nbsp;	
+    &nbsp;
+	<!-- Collection of nav links, forms, and other content for toggling -->
+	<div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
+    <div class="nav navbar-nav navbar-right">
+    <ul class="nav navbar-nav navbar-right" ">
+    <li>
+    <i class="fa fa-user" aria-hidden="true" style="font-size:36px; display:block;float: right;"></i>&nbsp;
+    </li>
+    <li>
+	    <button type="submit" class="btn btn-primary"style="display:block;float: right;">Logout</button>
+        </li>
+        <li>
+    </ul>
+    </div>
+    </div>
+    </div>
+</nav>
+</head>
+<body>
+    <div class="container">
+        <div class="wrapper rounded bg-white">
+            <h3>Registration Form</h3>
+            <div class="form">
+                <div class="row">
+                    <div class="col-md-6 mt-md-0 mt-3"> <label>First Name</label> <input type="text" class="form-control" required> </div>
+                    <div class="col-md-6 mt-md-0 mt-3"> <label>Last Name</label> <input type="text" class="form-control" required> </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mt-md-0 mt-3"> <label>Birthday</label> <input type="date" class="form-control" required> </div>
+                    <div class="col-md-6 mt-md-0 mt-3"> <label>Gender</label>
+                        <div class="d-flex align-items-center mt-2"> <label class="option"> <input type="radio" name="radio">Male <span class="checkmark"></span> </label> <label class="option ms-4" style="margin-left: 50px;"> <input type="radio" name="radio">Female <span class="checkmark" ></span> </label> </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mt-md-0 mt-3"> <label>Aadhar OR Passport Number</label> <input type="number" class="form-control" required> </div>
+                    <div class="col-md-6 mt-md-0 mt-3"> <label>Phone Number</label> <input type="tel" class="form-control" required> </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mt-md-0 mt-3" style="padding-top: 10px;"> <label>Address</label> <input type="text" class="form-control" required> </div>
+                </div>
+                <div class=" my-md-2 my-3">
+                    <label>Department</label><select id="sub" required>
+                        <option value="" selected hidden>Choose Option</option>
+                            <option value="CSE">CSE</option>
+                            <option value="Civil">Civil</option>
+                            <option value="Chemical">Chemical</option>
+                            <option value="Biotech">BioTech</option>
+                            <option value="Mechanical">Mechanical</option>
+                            <option value="Electrical">Electrical</option>
+                        </select> 
+                </div>
+                <div class=" my-md-2 my-3">
+                    <label>Specialization</label><select id="sub" required>
+                        <option value="" selected hidden>Choose Option</option>
+                            <option value="CSE">CSE</option>
+                            <option value="Civil">Civil</option>
+                            <option value="Chemical">Chemical</option>
+                            <option value="Biotech">BioTech</option>
+                            <option value="Mechanical">Mechanical</option>
+                            <option value="Electrical">Electrical</option>
+                        </select> 
+                </div>
+                <div class="col-md-6 mt-md-0 mt-3" style="padding-left:0px;"> <label>Category</label>
+                    <div class="d-flex align-items-center mt-2"> <label class="option"> <input type="radio" name="radio">General <span class="checkmark"></span> </label> <label class="option ms-4" style="margin-left: 50px;"> <input type="radio" name="radio">OBC <span class="checkmark" ></span> </label> <label class="option ms-4" style="margin-left: 50px;"> <input type="radio" name="radio">SC/ST <span class="checkmark" ></span> </label></div>
+                </div>
+                <div class="col-md-6 mt-md-0 mt-3" style="padding-left:0px;"> <label>PWD?</label>
+                    <div class="d-flex align-items-center mt-2"> <label class="option"> <input type="radio" name="radio">Yes <span class="checkmark"></span> </label> <label class="option ms-4" style="margin-left: 50px;"> <input type="radio" name="radio">No <span class="checkmark" ></span> </label> </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mt-md-0 mt-3" style="width: 526.5px;height: 39.5px; margin-bottom: 20px;"> <label>Documents</label> <input type="file" class="form-control" required> </div>
+                    <div class="col-md-6 mt-md-0 mt-3" style="width: 700px;height: 39.5px; margin-bottom: 20px;"> <label>Passport Photo</label> <input type="file" class="form-control" required> </div>
+                </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mt-md-0 mt-3" style="padding-top: 10px;"> <label>Notes</label> <input type="text" class="form-control" required> </div>
+                </div>
+                <div class="btn btn-primary mt-3" >Register Now</div>
+            </div>
+        </div>
+    </div> <!-- ./container -->
+</body>
+</html>
