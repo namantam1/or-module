@@ -11,14 +11,14 @@
 	padding-right: 50px;
 }
 .navbar .navbar-brand b {
-	color: #29c68c;		
+	color: #ffffff;		
 }
 .navbar a, .navbar a:active {
-	color: #999;
+	color: rgb(255, 255, 255);
 	background: transparent;
 }
 .navbar .navbar-nav a:hover, .navbar .navbar-nav a:focus {
-	color: #29c68c !important;
+	color: #ffffff !important;
 }
 .navbar .navbar-nav > a.active, .navbar .navbar-nav.show > a {
 	color: #26bb84 !important;
@@ -37,14 +37,14 @@
 .navbar .form-inline .btn {
 	border-radius: 2px;
 	color: #fff;
-	border-color: #29c68c;
-	background: #29c68c;
+	border-color: #ffffff;
+	background: #ffffff;
 	outline: none;
 }
 .navbar .form-inline .btn:hover, .navbar .form-inline .btn:focus {
 	float: right;
-	border-color: #26bb84;
-	background: #26bb84;
+	border-color: #ffffff;
+	background: #ffffff;
 }
 .navbar .search-form {
 	display: inline-block;
@@ -131,7 +131,7 @@ h3{
 }
 
 .wrapper {
-    max-width: 800px;
+    max-width: 80%;
     margin: 80px auto;
     padding: 30px 45px;
     box-shadow: 5px 25px 35px #3535356b
