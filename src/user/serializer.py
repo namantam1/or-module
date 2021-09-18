@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import user_passes_test
 from django.core.checks import messages
 from django.db.models import query
 from rest_framework import serializers
@@ -18,3 +19,31 @@ class VerifyEmailSerializer(serializers.Serializer):
             )
         ]
     )
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            "id",
+            "email",
+            "email_verified",
+            "name",
+            "image",
+            "date_joined",
+            "is_active",
+            "is_staff",
+        ]
+
+
+class StudentRegistrationSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+
+    class Meta:
+        model = StudentRegistration
+        fields = "__all__"
+        read_only_fields = ["created_on", "last_update", "user", "application_id"]
+
+
+class UploadFileSerializer(serializers.Serializer):
+    file = serializers.FileField()
