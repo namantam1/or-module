@@ -114,16 +114,16 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
     background: linear-gradient(to right, #01062A, #004e92);
-    min-height: 100vh
+    min-height: 100vh;
 }
 
 body::-webkit-scrollbar {
-    display: none
+    display: none;
 }
 
 h3{
@@ -139,11 +139,11 @@ h3{
 
 .wrapper label {
     display: block;
-    padding-bottom: 0.2rem
+    padding-bottom: 0.2rem;
 }
 
 .wrapper .form .row {
-    padding: 0.6rem 0
+    padding: 0.6rem 0;
 }
 
 .wrapper .form .row .form-control {
@@ -157,7 +157,7 @@ h3{
 }
 
 .wrapper .form .option input {
-    opacity: 0
+    opacity: 0;
 }
 
 .wrapper .form .checkmark {
@@ -167,15 +167,15 @@ h3{
     height: 20px;
     width: 20px;
     border: 1px solid #bbb;
-    border-radius: 50%
+    border-radius: 50%;
 }
 
 .wrapper .form .option input:checked~.checkmark:after {
-    display: block
+    display: block;
 }
 
 .wrapper .form .option:hover .checkmark {
-    background: #f3f3f3
+    background: #f3f3f3;
 }
 
 .wrapper .form .option .checkmark:after {
@@ -207,26 +207,48 @@ h3{
     border: 1px solid #ddd;
     padding: 10px;
     border-radius: 5px;
-    color: #333
+    color: #333;
 }
 
 #sub:focus {
-    outline: none
+    outline: none;
 }
 
 @media(max-width: 768.5px) {
     .wrapper {
-        margin: 30px
+        margin: 30px;
     }
 
     .wrapper .form .row {
-        padding: 0
+        padding: 0;
     }
 }
 
 @media(max-width: 400px) {
     .wrapper {
         padding: 25px;
-        margin: 20px
+        margin: 20px;
     }
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");
+
+.card .b
+{
+   color:#C0C0C0;
+   border-radius: 30px;
+   padding:20px;
+   margin: auto;
+   
+}
+card:hover
+{
+ background-color: #29c68c;
+}
+body {
+	font-family: 'Open Sans', sans-serif;
+}
+.flex-item-right
+{
+    flex:500%;
 }
