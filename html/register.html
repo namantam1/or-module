@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register - OR Module</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css"
+        crossorigin="anonymous">
+    <!-- <link href="/static/css/style.css" rel="stylesheet" /> -->
+    <link rel="stylesheet" href="/static/css/register.css" />
+</head>
+
+<body>
+    <section>
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-11 col-sm-9 col-md-7 col-lg-6 col-xl-5 text-center p-0 mt-3 mb-2">
+                    <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
+                        <h2 id="heading">Registeration Form</h2>
+                        <p>Fill all form field to go to next step</p>
+                        <div id="msform">
+                            <!-- progressbar -->
+                            <ul id="progressbar">
+                                <li class="active" id="account"><strong>Account</strong></li>
+                                <li id="personal"><strong>Verify</strong></li>
+                                <li id="payment"><strong>Personal</strong></li>
+                                <li id="confirm"><strong>Finish</strong></li>
+                            </ul>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                                    aria-valuemin="0" aria-valuemax="100"></div>
+                            </div> <br> <!-- fieldsets -->
+                            <fieldset id="account-form">
+                                <form onsubmit="Account()">
+                                    <div class="form-card">
+                                        <div class="row">
+                                            <div class="col-7">
+                                                <h2 class="fs-title">Account Information:</h2>
+                                            </div>
+                                            <div class="col-5">
+                                                <h2 class="steps">Step 1 - 4</h2>
+                                            </div>
+                                        </div>
+                                        <label class="fieldlabels">Email: *</label>
+                                        <input required name="email" type="email" name="email"
+                                            value="{{request.user.email}}" placeholder="Email Id" />
+
+                                        <label class="fieldlabels">Full Name: *</label>
+                                        <input required name="name" type="text" name="name" placeholder="Full Name"
+                                            value="{{request.user.name}}" />
+
+                                        <label class="fieldlabels">Password: *</label>
+                                        <input id="password1" required name="password1" type="password" name="password1"
+                                            placeholder="Password" />
+
+                                        <label class="fieldlabels">Confirm Password: *</label>
+                                        <input id="password2" required name="password2" type="password" name="password2"
+                                            placeholder="Confirm Password" />
+
+                                    </div>
+                                    <button type="submit" id="account-btn" class="next action-button">
+                                        Next
+                                    </button>
+                                </form>
+                            </fieldset>
+                            <fieldset>
+                                <form id="email-verify-form" onsubmit="EmailVerifyForm()">
+                                    <div class="form-card">
+                                        <div class="row">
+                                            <div class="col-7">
+                                                <h2 class="fs-title">Email Verify:</h2>
+                                            </div>
+                                            <div class="col-5">
+                                                <h2 class="steps">Step 2 - 4</h2>
+                                            </div>
+                                        </div>
+                                        <label class="fieldlabels">OPT: *</label>
+                                        <small id="timer" style="color: rgb(255, 47, 47); display: none;">Resend otp in
+                                            <span></span> seconds</small>
+                                        <input required name="otp" type="text" minlength="6" name="email"
+                                            placeholder="Enter 6 digit OTP code" />
+
+                                        <p>
+                                            <span id="email-text" style="font-weight: bold;">{{request.user.email}}</span>
+                                            | Not your email? <a href="#"
+                                                    onclick="moveBack('#email-verify-form')">Edit</a>
+                                        </p>
+
+                                    </div>
+                                    <button type="submit" id="verify-email-btn" class="next action-button">
+                                        Next
+                                    </button>
+                                    <button id="resend-otp-btn" onclick="ResendOTP()" name="previous"
+                                        class="action-button-previous" {% if not request.user %}disabled{% endif %}>
+                                        Resent OTP
+                                    </button>
+                                </form>
+                            </fieldset>
+                            <fieldset id="personal-form">
+                                <form onsubmit="Personal()" enctype="multipart/form-data">
+                                    <div class="form-card">
+                                        <div class="row">
+                                            <div class="col-7">
+                                                <h2 class="fs-title">Personal Info:</h2>
+                                            </div>
+                                            <div class="col-5">
+                                                <h2 class="steps">Step 3 - 4</h2>
+                                            </div>
+                                        </div>
+
+                                        <label class="fieldlabels">DOB: *</label>
+                                        <input required type="date" min="1990-01-01" max="2005-01-01" name="dob"
+                                            id="dob" placeholder="Date of birth">
+
+                                        <label class="fieldlabels">Aadhar/Passport: *</label>
+                                        <input required type="text" minlength="10" max="15" name="aadhar" id="aadhar"
+                                            placeholder="Aadhar/Passport">
+
+                                        <label class="fieldlabels">Address: *</label>
+                                        <textarea required name="address" id="address" placeholder="Address"></textarea>
+
+                                        <label class="fieldlabels">Gender: *</label>
+                                        <select required name="gender" id="gender">
+                                            <option>-</option>
+                                            <option value="male">Male</option>
+                                            <option value="female">Female</option>
+                                            <option value="other">Other</option>
+                                        </select>
+
+                                        <label for="category" class="fieldlabels">Category: *</label>
+                                        <select required name="category" id="category">
+                                            <option value="">-</option>
+                                            {% for category in categories %}
+                                            <option value="{{category.value}}">{{category.value}}</option>
+                                            {% endfor %}
+                                        </select>
+
+                                        <label for="department" class="fieldlabels">Department: *</label>
+                                        <select required onchange="setSpecialization()" name="department"
+                                            id="department">
+                                            <option value="">-</option>
+                                            {% for department in departments %}
+                                            <option value="{{department.value}}">{{department.value}}</option>
+                                            {% endfor %}
+                                        </select>
+
+                                        <label for="specialization" class="fieldlabels">Specialization: *</label>
+                                        <select required name="specialization" id="specialization">
+                                            <option value="">-</option>
+                                        </select>
+
+                                        <label class="fieldlabels">PWD:</label>
+                                        <select required name="pwd" id="pwd">
+                                            <option value="">-</option>
+                                            <option value="true">Yes</option>
+                                            <option value="false">No</option>
+                                        </select>
+
+                                        <label class="fieldlabels">Upload Your Photo:</label>
+                                        <input required type="file" name="image" accept="image/*,">
+
+                                        <label class="fieldlabels">Upload documents in a single PDF:</label>
+                                        <input type="file" name="documents" accept=".pdf">
+
+                                        <label class="fieldlabels">Notes: </label>
+                                        <textarea name="notes" id="notes" placeholder="Notes"></textarea>
+                                    </div>
+                                    <button id="personal-btn" type="submit" class="next action-button">
+                                        Next
+                                    </button>
+                                </form>
+                            </fieldset>
+                            <fieldset>
+                                <div class="form-card">
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <h2 class="fs-title">Finish:</h2>
+                                        </div>
+                                        <div class="col-5">
+                                            <h2 class="steps">Step 4 - 4</h2>
+                                        </div>
+                                    </div> <br><br>
+                                    <h2 class="purple-text text-center"><strong>SUCCESS !</strong></h2>
+                                    <br>
+                                    <div class="row justify-content-center">
+                                        <div class="col-3"> <img src="https://i.imgur.com/GwStPmg.png"
+                                                class="fit-image"> </div>
+                                    </div> <br><br>
+                                    <div class="row justify-content-center">
+                                        <div class="col-7 text-center">
+                                            <h5 class="purple-text text-center">
+                                                Congratulations! You Have registered successfull!
+                                            </h5>
+                                            <p>Your Application id is <b id="application-text"></b></p>
+                                            <p>Click <a href="/dashboard/">here</a> to check your status</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+
+    <script src="	https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <script>
+        let current = 1;
+        // let email = "{{request.user.email}}";
+
+        function Account() {
+            event.preventDefault();
+
+            const password1 = $("#password1");
+            const password2 = $("#password2")
+
+            if (password1.val() !== password2.val()) {
+                alert("Password did not match");
+                return;
+            }
+
+            const element = $(event.target);
+            const data = element.serialize();
+
+            // moveNext(event.target);
+
+            $.ajax({
+                "url": "/register/",
+                "method": "POST",
+                headers: { 'X-CSRFTOKEN': getCookie() },
+                data: data,
+                beforeSend: () => {
+                    setBtnLoading("#account-btn");
+                },
+                success: (res) => {
+                    console.log(res);
+                    moveNext(element)
+                    startTimer();
+                    $("#email-text").text(res.email)
+                },
+                error: (err) => {
+                    console.log(err.responseJSON);
+                    console.log(err.responseText);
+                    if (err.responseJSON) {
+                        alert(JSON.stringify(err.responseJSON));
+                    } else {
+                        console.log(err.responseText);
+                        alert("something went wrong.")
+                    }
+                },
+                complete: () => {
+                    unSetBtnLoading("#account-btn")
+                }
+            })
+
+        }
+
+        function EmailVerifyForm() {
+            event.preventDefault();
+            const element = event.target;
+
+            $.ajax({
+                "url": "/verify_otp/",
+                "method": "POST",
+                data: $(event.target).serialize(),
+                headers: { 'X-CSRFTOKEN': getCookie() },
+                beforeSend: () => {
+                    setBtnLoading("#verify-email-btn");
+                },
+                success: (res) => {
+                    console.log(res);
+                    moveNext(element)
+                },
+                error: (err) => {
+                    console.log(err.responseJSON);
+                    console.log(err.responseText);
+                    if (err.responseJSON) {
+                        alert(JSON.stringify(err.responseJSON));
+                    } else {
+                        console.log(err.responseText);
+                        alert("something went wrong.")
+                    }
+                },
+                complete: () => {
+                    unSetBtnLoading("#verify-email-btn")
+                }
+            })
+
+        }
+
+        function ResendOTP() {
+            event.preventDefault();
+            const element = event.target;
+
+            $.ajax({
+                "url": "/resend_otp/",
+                "method": "POST",
+                "headers": { "X-CSRFToken": getCookie() },
+                beforeSend: () => {
+                    setBtnLoading(element);
+                },
+                success: (res) => {
+                    console.log(res);
+                    startTimer();
+                    $("#resend-otp-btn").html("Resend OTP");
+                },
+                error: (err) => {
+                    console.log(err.responseJSON);
+                    console.log(err.responseText);
+                    if (err.responseJSON) {
+                        alert(JSON.stringify(err.responseJSON));
+                    } else {
+                        console.log(err.responseText);
+                        alert("something went wrong.")
+                    }
+                    unSetBtnLoading(element, "Resent OTP")
+                },
+            })
+        }
+
+        function Personal() {
+            event.preventDefault();
+            const element = event.target;
+
+            $.ajax({
+                url: "/student_register/",
+                method: "POST",
+                data: new FormData(event.target),
+                headers: { 'X-CSRFTOKEN': getCookie() },
+                contentType: false,
+                processData: false,
+                cache: false,
+                beforeSend: () => {
+                    setBtnLoading("#personal-btn");
+                },
+                success: (res) => {
+                    console.log(res);
+                    moveNext(element)
+                    $("#application-text").text(res.application_id);
+                },
+                error: (err) => {
+                    console.log(err.responseJSON);
+                    console.log(err.responseText);
+                    if (err.responseJSON) {
+                        alert(JSON.stringify(err.responseJSON));
+                    } else {
+                        console.log(err.responseText);
+                        alert("something went wrong.")
+                    }
+                },
+                complete: () => {
+                    unSetBtnLoading("#personal-btn")
+                }
+            })
+        }
+
+        function startTimer() {
+            const element = $("#timer");
+            let counter = 10;
+            $("#resend-otp-btn").attr("disabled", true);
+            element.show().children('span').text(counter);
+
+            const timer = setInterval(() => {
+                if (counter == 0) clearInterval(timer);
+
+                if (counter > 0) {
+                    element.children("span").text(--counter);
+                } else {
+                    element.hide();
+                    $("#resend-otp-btn").removeAttr("disabled");
+                }
+            }, 1000)
+        }
+
+        function setBtnLoading(btn) {
+            $(btn).attr("disabled", true);
+            $(btn).html(`<span class="spinner-border spinner-border-sm" role="status"
+                                        aria-hidden="true"></span>`);
+        }
+        function unSetBtnLoading(btn, text = "Next") {
+            $(btn).removeAttr("disabled")
+            $(btn).html(text);
+        }
+
+        function moveNext(ele) {
+            const current_fs = $(ele).parent();
+            const next_fs = $(ele).parent().next();
+
+            //Add Class Active
+            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+            //show the next fieldset
+            next_fs.show();
+            //hide the current fieldset with style
+            current_fs.animate({ opacity: 0 }, {
+                step: function (now) {
+                    // for making fielset appear animation
+                    opacity = 1 - now;
+
+                    current_fs.css({
+                        'display': 'none',
+                        'position': 'relative'
+                    });
+                    next_fs.css({ 'opacity': opacity });
+                },
+                duration: 500
+            });
+            setProgressBar(++current);
+        }
+
+        function moveBack(ele) {
+            const current_fs = $(ele).parent();
+            const previous_fs = $(ele).parent().prev();
+
+            //Remove class active
+            $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+
+            //show the previous fieldset
+            previous_fs.show();
+
+            //hide the current fieldset with style
+            current_fs.animate({ opacity: 0 }, {
+                step: function (now) {
+                    // for making fielset appear animation
+                    const opacity = 1 - now;
+
+                    current_fs.css({
+                        'display': 'none',
+                        'position': 'relative'
+                    });
+                    previous_fs.css({ 'opacity': opacity });
+                },
+                duration: 500
+            });
+            setProgressBar(--current);
+        }
+
+        function setSpecialization() {
+            const department = $("#department").val();
+
+            if (department) {
+                $.ajax({
+                    "url": "/specialization/" + department + "/",
+                    "method": "GET",
+                    success: (res) => {
+                        if (res) {
+                            $("#specialization").html(res.map(el => {
+                                return `<option>${el.value}</option>`;
+                            }));
+                        }
+                    },
+                    error: (err) => {
+                        console.log(err.responseJSON, err.responseText);
+                    }
+                })
+            }
+        }
+
+        function setProgressBar(curStep) {
+            var steps = $("fieldset").length;
+            var percent = parseFloat(100 / steps) * curStep;
+            percent = percent.toFixed();
+            $(".progress-bar")
+                .css("width", percent + "%")
+        }
+
+        function getCookie(name = "csrftoken") {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        $(document).ready(function () {
+            const form_sets = $("fieldset");
+            current = parseInt("{{form}}") || 1;
+            for (let i = 0; i < current; i++) {
+                $($("#progressbar li")[i]).addClass("active");
+            }
+
+            setProgressBar(current);
+            $(form_sets[current - 1]).show();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,6 +1,7 @@
 from datetime import time, timedelta
 import random
 from django import db
+from django.core.mail import send_mail
 from django.db import models
 from django.contrib.auth.models import (
     AbstractBaseUser,
@@ -70,6 +71,14 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self) -> str:
         return str(self.email or self.id)
 
+    def validate_otp(self, otp):
+        if hasattr(self, "otp") and self.otp.validate(otp):
+            self.email_verified = True
+            self.save()
+            return True
+
+        return False
+
 
 class Department(models.Model):
     value = models.CharField(max_length=30)
@@ -80,6 +89,7 @@ class Department(models.Model):
 
 class Specialization(models.Model):
     value = models.CharField(max_length=50)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return str(self.value or self.id)
@@ -97,15 +107,24 @@ class Category(models.Model):
 
 class StudentRegistration(models.Model):
     GENDER = [
-        ("Male", "Male"),
-        ("Female", "Female"),
-        ("Other", "Other"),
+        ("male", "Male"),
+        ("female", "Female"),
+        ("other", "Other"),
+    ]
+
+    STATUS = [
+        ("pending", "pending"),
+        ("rejected", "rejected"),
+        ("accepted", "accepted"),
     ]
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     gender = models.CharField(choices=GENDER, max_length=15, null=True, blank=True)
     dob = models.DateField(null=True, verbose_name="Date of birth", blank=True)
     application_id = models.CharField(max_length=30, unique=True, null=True, blank=True)
+    registration_number = models.CharField(
+        max_length=30, unique=True, null=True, blank=True
+    )
     aadhar = models.CharField(max_length=15, unique=True, null=True, blank=True)
     passport = models.CharField(max_length=15, unique=True, null=True, blank=True)
     address = models.TextField(null=True, blank=True)
@@ -115,10 +134,14 @@ class StudentRegistration(models.Model):
     )
     category = models.CharField(max_length=15, db_index=True, null=True, blank=True)
     pwd = models.BooleanField(default=False)
-    documents = models.TextField(
-        "URL of document uploaded", help_text="comma seperated", blank=True, null=True
+    documents = models.FileField(
+        "URL of document uploaded",
+        upload_to="files",
+        blank=True,
+        null=True,
     )
-    notes = models.TextField()
+    notes = models.TextField(null=True, blank=True)
+    status = models.CharField(max_length=20, choices=STATUS, default="pending")
     created_on = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
 
@@ -130,14 +153,18 @@ def get_expire_time():
     return timezone.now() + timedelta(minutes=2)
 
 
+def get_otp():
+    return random.randint(100000, 999999)
+
+
 class OTP(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     attempts = models.IntegerField(default=3)
     expire_on = models.DateTimeField(default=get_expire_time)
-    value = models.IntegerField(default=lambda: random.randint(100000, 999999))
+    value = models.IntegerField(default=get_otp)
 
     def __str__(self) -> str:
-        return self.user
+        return str(self.user or self.id)
 
     @property
     def is_expired(self):
@@ -146,21 +173,22 @@ class OTP(models.Model):
             return True
         return False
 
+    def validate(self, otp):
+        if not self.is_expired and str(self.value) == str(otp):
+            self.delete()
+            return True
+        if self.id:
+            self.attempts = F("attempts") - 1
+            self.save()
+        return False
+
     @classmethod
-    def validate(cls, otp, email):
-        """
-        Return true if otp valid
-        else return number of attempts left
-        """
-        obj = cls.objects.filter(user__email=email).first()
+    def send_otp(cls, user):
+        otp, _ = cls.objects.update_or_create(user=user)
 
-        if obj and not obj.is_expired:
-            obj.attempts = F("attempts") - 1
-            obj.save()
-            if str(otp) == str(obj.value):
-                obj.delete()
-                return True
-
-            return obj.attempts + 1
-
-        return 0
+        send_mail(
+            "Account verification",
+            "Your otp is {}".format(otp.value),
+            None,
+            [user.email],
+        )

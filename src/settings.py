@@ -65,7 +65,7 @@ ROOT_URLCONF = "src.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "html"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -119,6 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Rest framework
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.BasicAuthentication",
         "rest_framework.authentication.SessionAuthentication",
     ]
 }
@@ -149,9 +150,7 @@ MEDIA_URL = "/media/"
 LOGIN_URL = "/login/"
 
 # # Extra places for collectstatic to find static files.
-# STATICFILES_DIRS = (
-#     os.path.join(BASE_DIR, 'static'),
-# )
+STATICFILES_DIRS = [BASE_DIR / "assets"]
 
 
 # Cloudinary stuff
@@ -160,6 +159,16 @@ CLOUDINARY_STORAGE = {
     "API_KEY": os.getenv("API_KEY", "177538896198132"),
     "API_SECRET": os.getenv("API_SECRET", "D8Ad7GG8YP_VYr0L5HmJlbSptVw"),
 }
+
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.getenv("EMAIL", "up123.next123@gmail.com")
+EMAIL_HOST_PASSWORD = os.getenv("PASSWORD", "qxsnihjxojtdeseu")
+DEFAULT_FROM_EMAIL = "OR-Module<{}>".format(EMAIL_HOST_USER)
+
 
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"

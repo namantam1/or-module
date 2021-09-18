@@ -1,9 +1,10 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import User, StudentRegistration, Category, Department, Specialization
+from .models import OTP, User, StudentRegistration, Category, Department, Specialization
 
 admin.site.register(StudentRegistration)
 admin.site.register(Category)
+admin.site.register(OTP)
 admin.site.register(Department)
 admin.site.register(Specialization)
 

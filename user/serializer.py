@@ -1,24 +1,41 @@
-from django.contrib.auth.decorators import user_passes_test
-from django.core.checks import messages
-from django.db.models import query
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
+from django.core.mail import send_mail
 
-from .models import StudentRegistration, User
+from .models import OTP, Specialization, StudentRegistration, User
+from django.db import transaction
 
 
-class VerifyEmailSerializer(serializers.Serializer):
+class SpecializationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Specialization
+        fields = "__all__"
+
+
+class RegisterSerializer(serializers.Serializer):
     email = serializers.EmailField(
         validators=[UniqueValidator(User.objects.all(), "email already exists.")]
     )
     name = serializers.CharField()
-    application_id = serializers.CharField(
-        validators=[
-            UniqueValidator(
-                StudentRegistration.objects.all(), "application id already exists."
-            )
-        ]
-    )
+    password1 = serializers.CharField()
+    password2 = serializers.CharField()
+
+    def validate(self, attrs):
+        password1 = attrs.pop("password1")
+        password2 = attrs.pop("password2")
+        if password2 != password1:
+            raise serializers.ValidationError({"password2": "password did not match"})
+
+        with transaction.atomic():
+            # This code executes inside a transaction.
+            user = User(**attrs)
+            user.set_password(password1)
+            user.save()
+
+            # send otp mail
+            OTP.send_otp(user)
+
+            return user
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -38,11 +55,29 @@ class UserSerializer(serializers.ModelSerializer):
 
 class StudentRegistrationSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
+    image = serializers.ImageField(write_only=True)
 
     class Meta:
         model = StudentRegistration
         fields = "__all__"
-        read_only_fields = ["created_on", "last_update", "user", "application_id"]
+        read_only_fields = [
+            "created_on",
+            "last_update",
+            "user",
+            "application_id",
+            "status",
+        ]
+
+    def create(self, validated_data):
+        image = validated_data.pop("image", None)
+        res = super().create(validated_data)
+
+        if image:
+            user = res.user
+            user.image = image
+            user.save()
+
+        return res
 
 
 class UploadFileSerializer(serializers.Serializer):

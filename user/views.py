@@ -1,93 +1,153 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 
+from rest_framework.exceptions import ValidationError
+
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.generics import (
     CreateAPIView,
+    GenericAPIView,
+    ListAPIView,
+    RetrieveAPIView,
     RetrieveUpdateAPIView,
     get_object_or_404,
 )
-from rest_framework.utils import serializer_helpers
-from rest_framework.views import APIView
-from user.models import OTP, StudentRegistration, User
+from user.models import (
+    OTP,
+    Category,
+    Department,
+    Specialization,
+    StudentRegistration,
+    User,
+)
+
+from django.contrib.auth import login as login_user
 
 from django.core.files.storage import default_storage
 
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 
 from user.serializer import (
+    SpecializationSerializer,
     StudentRegistrationSerializer,
     UploadFileSerializer,
-    VerifyEmailSerializer,
+    RegisterSerializer,
+    UserSerializer,
 )
 
 
 def home(request):
-    return render(request, "user/login.html")
+    return render(request, "index.html")
+
+
+def login(request):
+    return render(request, "login.html")
 
 
 def register(request):
-    if request.user.is_authenticated:
-        return redirect("dashboard")
+    pass
 
-    return render(request, "user/register.html")
+
+class Register(GenericAPIView):
+    serializer_class = RegisterSerializer
+
+    def get(self, request):
+        user = request.user
+        form = 1
+
+        if user.is_authenticated:
+            if user.is_staff:
+                return render(request, "admin_dashboard.html")
+
+            if hasattr(user, "studentregistration"):
+                return render(request, "dashboard.html")
+
+            elif user.email_verified:
+                form = 3
+
+            else:
+                form = 2
+
+        data = {
+            "departments": Department.objects.all(),
+            "categories": Category.objects.all(),
+            "form": form,
+        }
+        return render(request, "register.html", context=data)
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(True)
+        user = serializer.validated_data
+        login_user(request, user)
+        return Response(UserSerializer(user).data, 201)
 
 
 @login_required
 def dashboard(request):
     if request.user.is_staff:
-        return render(request, "user/admin.html")
+        return render(request, "dashboard.html")
     else:
-        return render(request, "user/dashboard.html")
+        return render(request, "dashboard.html")
 
 
 @api_view(["POST"])
-def verify_email(request):
-    serializer = VerifyEmailSerializer(data=request.data)
-    if serializer.is_valid(True):
-        validated_data = serializer.validated_data
+@login_required
+def verify_otp(request):
+    otp = request.data.get("otp")
+    if otp is not None and request.user.validate_otp(otp):
+        return Response({}, 200)
 
-        user = User.objects.create(
-            email=validated_data.get("email"), name=validated_data.get("name")
-        )
-
-        registration = StudentRegistration.objects.create(
-            user=user, application_id=validated_data.get("application_id")
-        )
-
-        return Response({"registration_id": registration.id}, 201)
-
-    return Response({}, 200)
+    return Response("Invalid otp", 400)
 
 
+@login_required
 @api_view(["POST"])
-def register_student(request):
-    pass
+def resend_otp(request):
+    if not request.user.email_verified:
+        OTP.send_otp(request.user)
+        return Response({}, 200)
+
+    return Response("Something went wrong", 400)
 
 
-@api_view(["POST"])
-def validate_otp(request):
-    data = request.data
-    email = data.get("email")
-    otp = data.get("otp")
-    if email and otp:
-        res = OTP.validate(otp, email)
-        if res is True:
-            return Response({}, 201)
-
-    return Response({"attempts_left": res}, 400)
+class StudentRegistrationView(RetrieveAPIView):
+    permission_classes = [IsAdminUser]
+    serializer_class = StudentRegistrationSerializer
 
 
-class StudentRegistrationView(RetrieveUpdateAPIView):
+class StudentUpdateView(RetrieveUpdateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = StudentRegistrationSerializer
 
     def get_object(self):
-        pk = self.kwargs.pop("pk")
         return get_object_or_404(
-            StudentRegistration.objects.filter(id=pk), user=self.request.user
+            StudentRegistration.objects.all(), user=self.request.user
         )
+
+    def update(self, request, *args, **kwargs):
+        return super().update(request, *args, **kwargs)
+
+class StudentCreateView(CreateAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = StudentRegistration.objects.all()
+    serializer_class = StudentRegistrationSerializer
+
+    def perform_create(self, serializer):
+        if not self.request.user.email_verified:
+            raise ValidationError({"user": "Email not verified!"}, "permission denied")
+
+        return serializer.save(user=self.request.user)
+
+
+class SpecializationListView(ListAPIView):
+    serializer_class = SpecializationSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        department = self.kwargs.pop("department", "")
+        return Specialization.objects.filter(department__value=department)
 
 
 class UploadFileView(CreateAPIView):
