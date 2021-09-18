@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORM</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="navbar.css">
+<link href="//bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link href="//bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <img src="b.jpg" class="img-responsive" style="height:40px;width: 40px;">
+    &nbsp;
+	<a href="#" class="navbar-brand"><b>ORM</b></a> 	
+    &nbsp;
+	<!-- Collection of nav links, forms, and other content for toggling -->
+	<div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
+    <div class="nav navbar-nav navbar-right">
+    <ul class="nav navbar-nav navbar-right" style="float: right;">
+    <li>
+    <i class="fa fa-user" aria-hidden="true" style="font-size:36px"></i>&nbsp;
+    </li>
+    <li>
+	    <button type="submit" class="btn btn-primary">Logout</button>
+        </li>
+        <li>
+    </ul>
+    </div>
+    </div>
+    </div>
+</nav>
+</head>
+<body>
+    <div class="container">
+        <form class="form-horizontal" role="form">
+            <h2>APPLICATION</h2>
+            <div class="form-group">
+                <label for="firstName" class="col-sm-3 control-label">First Name</label>
+                <div class="col-sm-9">
+                    <input type="text" id="firstName" placeholder="First Name" class="form-control" autofocus>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="lastName" class="col-sm-3 control-label">Last Name</label>
+                <div class="col-sm-9">
+                    <input type="text" id="lastName" placeholder="Last Name" class="form-control" autofocus>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email" class="col-sm-3 control-label">Email* </label>
+                <div class="col-sm-9">
+                    <input type="email" id="email" placeholder="Email" class="form-control" name= "email">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="birthDate" class="col-sm-3 control-label">Date of Birth*</label>
+                <div class="col-sm-9">
+                    <input type="date" id="birthDate" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="phoneNumber" class="col-sm-3 control-label">Phone number </label>
+                <div class="col-sm-9">
+                    <input type="phoneNumber" id="phoneNumber" placeholder="Phone number" class="form-control">
+                    <span class="help-block">Your phone number won't be disclosed anywhere </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="aadhar" class="col-sm-3 control-label">Aadhar/Passport</label>
+                <div class="col-sm-9">
+                    <input type="file" id="aadhar" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Address" class="col-sm-3 control-label">Address</label>
+                <div class="col-sm-9">
+                    <input type="text" id="Address" placeholder="Address" class="form-control" autofocus>
+                </div>
+            </div>
+             <div class="form-group">
+                    <label for="weight" class="col-sm-3 control-label">Weight* </label>
+                <div class="col-sm-9">
+                    <input type="number" id="weight" placeholder="Please write your weight in kilograms" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3">Gender</label>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label class="radio-inline">
+                                <input type="radio" id="femaleRadio" value="Female">Female
+                            </label>
+                        </div>
+                        <div class="col-sm-4">
+                            <label class="radio-inline">
+                                <input type="radio" id="maleRadio" value="Male">Male
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- /.form-group -->
+            <div class="form-group">
+                <label class="control-label col-sm-3">Department</label>
+                <div class="col-sm-9">
+                    
+                        <select class="dropdown" name="Department" id="Department"class="form-control">
+                            <option class="form" value="CSE">CSE</option>
+                            <option class="form"  value="Civil">Civil</option>
+                            <option class="form"  value="Mechanical">Mechanical</option>
+                            <option class="form"  value="Electrical">Electrical</option>
+                            <option class="form"  value="Biotechnology">Biotechnology</option>
+                            <option class="form"  value="Chemical">Chemical</option>
+                        </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3">Specialization</label>
+                <div class="col-sm-9">
+                        <select class="dropdown" name="Department" id="Department"class="form-control">
+                            <option class="form" value="CSE">CSE</option>
+                            <option class="form"  value="Civil">Civil</option>
+                            <option class="form"  value="Mechanical">Mechanical</option>
+                            <option class="form"  value="Electrical">Electrical</option>
+                            <option class="form"  value="Biotechnology">Biotechnology</option>
+                            <option class="form"  value="Chemical">Chemical</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Category</label>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label class="radio-inline">
+                                    <input type="radio" id="SC" value="SC">SC
+                                </label>
+                            </div>
+                            <div class="col-sm-4">
+                                <label class="radio-inline">
+                                    <input type="radio" id="ST" value="ST">ST
+                                </label>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="radio-inline">
+                                        <input type="radio" id="OBC" value="OBC">OBC
+                                    </label>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="radio-inline">
+                                        <input type="radio" id="General" value="General">General
+                                    </label>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Are you a PWD candidate ?</label>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label class="radio-inline">
+                                    <input type="radio" id="yes" value="yes">Yes
+                                </label>
+                            </div>
+                            <div class="col-sm-4">
+                                <label class="radio-inline">
+                                    <input type="radio" id="No" value="No">No
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="docs" class="col-sm-3 control-label">Documents</label>
+                    <div class="col-sm-9">
+                        <input type="file" id="docs" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="photo" class="col-sm-3 control-label">Passports Size Photo</label>
+                    <div class="col-sm-9">
+                        <input type="image" id="photo" class="form-control">
+                    </div>
+                </div>
+            <div class="form-group">
+                <div class="col-sm-9 col-sm-offset-3">
+                    <span class="help-block">*Required fields</span>
+                </div>
+            </div>
+        </div>
+            <button type="submit" class="btn btn-primary btn-block">Register</button>
+        </form> <!-- /form -->
+    </div> <!-- ./container -->
+</body>
+</html>
