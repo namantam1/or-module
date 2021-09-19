@@ -80,6 +80,62 @@
             toggleTab("[data-name=pending]");
         });
 
+        function reject() {
+            event.preventDefault();
+            const element = $(event.target);
+            $.ajax({
+                url: `/reject/${element.data("id")}/`,
+                data: new FormData(event.target),
+                method: "POST",
+                headers: { 'X-CSRFTOKEN': getCookie() },
+                contentType: false,
+                processData: false,
+                cache: false,
+                success: (res) => {
+                    // console.log(res);
+                    window.location.reload();
+                    // toggleActive(element);
+                },
+                error: (err) => {
+                    console.log(err.responseJSON)
+                    console.log(err.responseText)
+                    if (err.responseJSON) {
+                        alert(JSON.stringify(err.responseJSON));
+                    } else {
+                        alert("something went wrong!");
+                    }
+                }
+            })
+        }
+        function accept() {
+            event.preventDefault();
+            const element = $(event.target);
+            $.ajax({
+                url: `/accept/${element.data("id")}/`,
+                data: new FormData(event.target),
+                method: "POST",
+                headers: { 'X-CSRFTOKEN': getCookie() },
+                contentType: false,
+                processData: false,
+                cache: false,
+                success: (res) => {
+                    // console.log(res);
+                    window.location.reload();
+                    // toggleActive(element);
+                },
+                error: (err) => {
+                    console.log(err.responseJSON)
+                    console.log(err.responseText)
+                    if (err.responseJSON) {
+                        alert(JSON.stringify(err.responseJSON));
+                    } else {
+                        alert("something went wrong!");
+                    }
+                }
+            })
+        }
+
+        
         function toggleTab(element) {
             element = $(element);
             if (element.length && !element.hasClass("active")) {
@@ -144,7 +200,7 @@
             return (`
             <div class="modal fade" id="user-${data.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
-                <div class="modal-dialog-md" role="document">
+                <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
@@ -167,13 +223,13 @@
                                     ${getModalLi("Image", '<a href=' + data.user.image + '>Link</a>')}
                                 </ul>
                                 
-                                <form class="p-4">
+                                <form class="p-4 reject-form" onsubmit="reject()" data-id="${data.id}">
                                     <input class="form-control" type="text" name="reason" placeholder="Reason">
                                     
                                     <button type="submit" class="btn btn-danger mt-2" data-id="${data.id}">Reject</button>
                                 </form>
 
-                                <form class="p-4">
+                                <form class="p-4" onsubmit="accept()" data-id="${data.id}">
                                     <input class="form-control" type="text" name="registration_number" placeholder="Regitration Number">
                                     <button type="submit" class="btn btn-primary mt-2" data-id="${data.id}">Accept</button>
                                 </form>

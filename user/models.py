@@ -150,14 +150,26 @@ class StudentRegistration(models.Model):
         self.status = "accepted"
         self.save()
 
-        send_mail(
-            "Application accepted",
-            "Your application is accepted. Your registration number is {}".format(
-                registration_num
-            ),
-            None,
-            [self.user.email],
-        )
+        # send_mail(
+        #     "Application accepted",
+        #     "Your application is accepted. Your registration number is {}".format(
+        #         registration_num
+        #     ),
+        #     None,
+        #     [self.user.email],
+        # )
+
+    def reject(self, reason):
+        self.reason = reason
+        self.status = "rejected"
+        self.save()
+
+        # send_mail(
+        #     "Application accepted",
+        #     "Your application is rejected. Reason is {}".format(reason),
+        #     None,
+        #     [self.user.email],
+        # )
 
 
 def get_expire_time():

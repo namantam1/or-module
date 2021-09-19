@@ -1,9 +1,10 @@
+import re
 from django.contrib.auth import login as login_user
 from django.contrib.auth import logout as logout_user
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import default_storage
 from django.shortcuts import redirect, render
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import (
     CreateAPIView,
@@ -21,7 +22,6 @@ from user.models import (
     Department,
     Specialization,
     StudentRegistration,
-    User,
 )
 from user.serializer import (
     LoginSerializer,
@@ -131,6 +131,26 @@ def resend_otp(request):
         return Response({}, 200)
 
     return Response("Something went wrong", 400)
+
+
+@login_required
+@api_view(["POST"])
+@permission_classes([IsAdminUser])
+def accept(request, pk):
+    registration_number = request.data.get("registration_number")
+    reg = StudentRegistration.objects.get(id=pk)
+    reg.confirm(registration_number)
+    return Response({}, 201)
+
+
+@login_required
+@api_view(["POST"])
+@permission_classes([IsAdminUser])
+def reject(request, pk):
+    reason = request.data.get("reason")
+    reg = StudentRegistration.objects.get(id=pk)
+    reg.reject(reason)
+    return Response({}, 201)
 
 
 class StudentRegistrationView(ListAPIView):

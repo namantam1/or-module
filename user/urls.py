@@ -8,9 +8,11 @@ from .views import (
     StudentRegistrationView,
     StudentUpdateView,
     UploadFileView,
+    accept,
     dashboard,
     home,
     logout,
+    reject,
     resend_otp,
     verify_otp,
 )
@@ -39,6 +41,8 @@ urlpatterns = [
         name="student_regitrations",
     ),
     path("upload_file/", UploadFileView.as_view(), name="upload_file"),
+    path("reject/<int:pk>/", reject, name="reject"),
+    path("accept/<int:pk>/", accept, name="accept"),
     path(
         "specialization/<str:department>/",
         SpecializationListView.as_view(),
