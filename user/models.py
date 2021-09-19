@@ -1,19 +1,16 @@
-from datetime import time, timedelta
 import random
-from django import db
-from django.core.mail import send_mail
-from django.db import models
+import secrets
+from datetime import timedelta
+
 from django.contrib.auth.models import (
     AbstractBaseUser,
-    PermissionsMixin,
     BaseUserManager,
+    PermissionsMixin,
 )
+from django.core.mail import send_mail
+from django.db import models
 from django.db.models.expressions import F
-from django.db.models.query_utils import select_related_descend
-
 from django.utils import timezone
-
-import secrets
 
 
 class UserManager(BaseUserManager):
@@ -148,6 +145,20 @@ class StudentRegistration(models.Model):
 
     def __str__(self):
         return str(self.user or self.id)
+
+    def confirm(self, registration_num):
+        self.registration_number = registration_num
+        self.status = "accepted"
+        self.save()
+
+        send_mail(
+            "Application accepted",
+            "Your application is accepted. Your registration number is {}".format(
+                registration_num
+            ),
+            None,
+            [self.user.email],
+        )
 
 
 def get_expire_time():

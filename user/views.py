@@ -1,18 +1,20 @@
-from django.shortcuts import redirect, render
+from django.contrib.auth import login as login_user
+from django.contrib.auth import logout as logout_user
 from django.contrib.auth.decorators import login_required
-
-from rest_framework.exceptions import ValidationError
-
+from django.core.files.storage import default_storage
+from django.shortcuts import redirect, render
 from rest_framework.decorators import api_view
-from rest_framework.response import Response
+from rest_framework.exceptions import ValidationError
 from rest_framework.generics import (
     CreateAPIView,
     GenericAPIView,
     ListAPIView,
-    RetrieveAPIView,
     RetrieveUpdateAPIView,
     get_object_or_404,
 )
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.response import Response
+
 from user.models import (
     OTP,
     Category,
@@ -21,19 +23,12 @@ from user.models import (
     StudentRegistration,
     User,
 )
-
-from django.contrib.auth import login as login_user, logout as logout_user
-
-from django.core.files.storage import default_storage
-
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
-
 from user.serializer import (
     LoginSerializer,
+    RegisterSerializer,
     SpecializationSerializer,
     StudentRegistrationSerializer,
     UploadFileSerializer,
-    RegisterSerializer,
     UserSerializer,
 )
 
@@ -141,6 +136,10 @@ def resend_otp(request):
 class StudentRegistrationView(ListAPIView):
     permission_classes = [IsAdminUser]
     serializer_class = StudentRegistrationSerializer
+
+    def get_queryset(self):
+        status = self.request.query_params.get("status")
+        return StudentRegistration.objects.filter(status__in=status)
 
 
 class StudentUpdateView(RetrieveUpdateAPIView):
