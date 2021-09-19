@@ -67,7 +67,7 @@ class UserSerializer(serializers.ModelSerializer):
 class StudentRegistrationSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     image = serializers.ImageField(write_only=True, required=False)
-    name = serializers.CharField(write_only=True)
+    name = serializers.CharField(write_only=True, required=False)
 
     class Meta:
         model = StudentRegistration
