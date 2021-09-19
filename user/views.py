@@ -137,6 +137,12 @@ def resend_otp(request):
 @permission_classes([IsAdminUser])
 def accept(request, pk):
     registration_number = request.data.get("registration_number")
+
+    if StudentRegistration.objects.filter(
+        registration_number=registration_number
+    ).exists():
+        return Response({"message": "This registration number is already taken"}, 400)
+
     reg = StudentRegistration.objects.get(id=pk)
     reg.confirm(registration_number)
     return Response({}, 201)

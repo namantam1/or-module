@@ -105,66 +105,68 @@
                     </div>
                 </div>
 
-                <div class=" my-md-2 my-3">
-                    <label>Department</label>
-                    <select name="department" required>
-                        {% for depart in departments %}
-                        <option value="{{depart.value}}" {% if depart.value == student.department %}selected="selected" {%endif %}>
-                            {{depart.value}}
-                        </option>
-                        {% endfor %}
-                    </select>
-                </div>
+                <div class="row">
+                    <div class="col-12 my-md-2 my-3">
+                        <label>Department</label>
+                        <select id="department" onchange="setSpecialization()" name="department" required>
+                            {% for depart in departments %}
+                            <option value="{{depart.value}}" {% if depart.value == student.department %}selected="selected" {%endif %}>
+                                {{depart.value}}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
 
-                <div class=" my-md-2 my-3">
-                    <label>Specialization</label>
-                    <select name="specialization" required>
-                        {% for spe in specializations %}
-                        <option value="{{spe.value}}" {% if spe.value == student.specialization %}selected="selected" {% endif %}>
-                            {{spe.value}}
-                        </option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <div class="col-md-6 mt-md-0 mt-3" style="padding-left:0px;">
-                    <label>Category</label>
-                    <select name="category" required>
-                        {% for cat in categories %}
-                        <option value="{{cat.value}}" {% if cat.value == student.category %}selected="selected" {% endif %}>
-                            {{cat.value}}
-                        </option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <div class="col-md-6 mt-md-0 mt-3" style="padding-left:0px;">
-                    <label>PWD?</label>
-                    <select name="pwd" required>
-                        <option {% if student.pwd %}selected{% endif %} value="true">Yes</option>
-                        <option {% if not student.pwd %}selected{% endif %} value="false">No</option>
-                    </select>
-
-                    <div class="row">
-                        <div class="d-flex align-items-center mt-2">
-                            <div class="col-md-6 mt-md-0 mt-3" style="width: 50%;height: 39.5px; margin-bottom: 20px;">
-                                <label>Documents</label>
-                                <a href="{% if student.documents %}{{student.documents.url}}{% endif %}" target="_blank">current</a>
-                                <input name="documents" type="file" class="form-control" accept=".pdf">
-                            </div>
-                            <div class="col-md-6 mt-md-0 mt-3"
-                            style="width: 700px;height: 39.5px; margin-bottom: 20px;">
-                            <label>Passport Photo</label>
-                                
-                                <a href="{% if user.image %}{{user.image.url}}{% endif %}" target="_blank">current</a>
-                                <input name="image" type="file" class="form-control" accept="image/png, image/jpeg">
-                            </div>
-                        </div>
+                    <div class="col-12 my-md-2 my-3">
+                        <label>Specialization</label>
+                        <select id="specialization" name="specialization" required>
+                            {% for spe in specializations %}
+                            <option value="{{spe.value}}" {% if spe.value == student.specialization %}selected="selected" {% endif %}>
+                                {{spe.value}}
+                            </option>
+                            {% endfor %}
+                        </select>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12 mt-md-0 mt-3" style="padding-top: 10px;"> 
+                    <div class="col-md-6 mt-md-0 mt-3">
+                        <label>Category</label>
+                        <select name="category" required>
+                            {% for cat in categories %}
+                            <option value="{{cat.value}}" {% if cat.value == student.category %}selected="selected" {% endif %}>
+                                {{cat.value}}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mt-md-0 mt-3">
+                        <label>PWD?</label>
+                        <select name="pwd" required>
+                            <option {% if student.pwd %}selected{% endif %} value="true">Yes</option>
+                            <option {% if not student.pwd %}selected{% endif %} value="false">No</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-12 my-md-2 my-3">
+                        <label>Documents</label>
+                        <input name="documents" type="file" class="form-control" accept=".pdf">
+                        <a href="{% if student.documents %}{{student.documents.url}}{% endif %}" target="_blank">current</a>
+                    </div>
+
+                    <div class="col-12 my-md-2 my-3">
+                        <label>Passport Photo</label>
+                        <input name="image" type="file" class="form-control" accept="image/png, image/jpeg">
+                        <a href="{% if user.image %}{{user.image.url}}{% endif %}" target="_blank">current</a>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 mt-md-0" style="padding-top: 10px;"> 
                         <label>Notes</label> 
                         <input value="{{student.notes}}" type="text" class="form-control"> </div>
                 </div>

@@ -23,3 +23,26 @@ function unSetBtnLoading(btn, text = "Next") {
   $(btn).removeAttr("disabled");
   $(btn).html(text);
 }
+
+function setSpecialization() {
+  const department = $("#department").val();
+
+  if (department) {
+    $.ajax({
+      url: "/specialization/" + department + "/",
+      method: "GET",
+      success: (res) => {
+        if (res) {
+          $("#specialization").html(
+            res.map((el) => {
+              return `<option>${el.value}</option>`;
+            })
+          );
+        }
+      },
+      error: (err) => {
+        console.log(err.responseJSON, err.responseText);
+      },
+    });
+  }
+}
