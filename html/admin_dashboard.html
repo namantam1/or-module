@@ -258,13 +258,13 @@
         function getForm(data) {
             return (`
             <form class="p-4 reject-form" onsubmit="reject()" data-id="${data.id}">
-                <input class="form-control" type="text" name="reason" placeholder="Reason">
+                <input required class="form-control" type="text" name="reason" placeholder="Reason">
                 
                 <button type="submit" class="btn btn-danger mt-2" data-id="${data.id}">Reject</button>
             </form>
 
             <form class="p-4" onsubmit="accept()" data-id="${data.id}">
-                <input class="form-control" type="text" name="registration_number" placeholder="Registration Number">
+                <input required class="form-control" type="text" name="registration_number" placeholder="Registration Number">
                 <button type="submit" class="btn btn-primary mt-2" data-id="${data.id}">Accept</button>
             </form>
             `)
