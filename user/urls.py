@@ -33,6 +33,11 @@ urlpatterns = [
         StudentUpdateView.as_view(),
         name="student_update",
     ),
+    path(
+        "student_regitrations/",
+        StudentRegistrationView.as_view(),
+        name="student_regitrations",
+    ),
     path("upload_file/", UploadFileView.as_view(), name="upload_file"),
     path(
         "specialization/<str:department>/",

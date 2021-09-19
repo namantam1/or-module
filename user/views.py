@@ -138,8 +138,8 @@ class StudentRegistrationView(ListAPIView):
     serializer_class = StudentRegistrationSerializer
 
     def get_queryset(self):
-        status = self.request.query_params.get("status")
-        return StudentRegistration.objects.filter(status__in=status)
+        status = self.request.query_params.get("status", "")
+        return StudentRegistration.objects.filter(status__in=status.split(","))
 
 
 class StudentUpdateView(RetrieveUpdateAPIView):

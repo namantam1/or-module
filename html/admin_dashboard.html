@@ -24,9 +24,9 @@
             <div class="nav navbar-nav navbar-right">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-	                    <button type=" submit" class="btn btn-primary logout" style="display:flex;float: right;">
-                    <a href="/logout/">Logout</a>
-                    </button>
+                        <button type=" submit" class="btn btn-primary logout" style="display:flex;float: right;">
+                            <a href="/logout/">Logout</a>
+                        </button>
                     </li>
                 </ul>
             </div>
@@ -34,15 +34,15 @@
     </nav>
     <div class="container">
         <div class="wrapper1 rounded bg-white">
-            <ul class="nav nav-pills" style="margin: 5px;">
+            <ul id="tabs" class="nav nav-pills" style="margin: 5px;">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Pending</a>
+                    <a class="nav-link" href="#" data-name="pending">Pending</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Accepted</a>
+                    <a class="nav-link" href="#" data-name="accepted">Accepted</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Rejected</a>
+                    <a class="nav-link" href="#" data-name="rejected">Rejected</a>
                 </li>
             </ul>
         </div>
@@ -50,78 +50,158 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="mt-3">
-                        <ul class="list list-inline">
-                            <div class="card mb-3" style="width: 1000px;height:80px;background:#F0F0F0;padding:5px;">
-                                <li class="d-flex justify-content-between">
-                                    <div class="d-flex flex-row align-items-center"><i
-                                            class="fa fa-check-circle checkicon"></i>
-                                        <div class="ml-2">
-                                            <h6 class="mb-0">Name</h6>
-                                            <div class="d-flex flex-row mt-1 text-black-50 date-time">
-                                                <div><i class="fa fa-calendar-o"></i><span class="ml-2">22 May 2020
-                                                        11:30 PM</span></div>
-                                                <div class="ml-3"><i class="fa fa-clock-o"></i><span
-                                                        class="ml-2">6h</span></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-row align-items-center">
-                                        <div class="d-flex flex-column mr-2">
-                                            <div><b>Application ID</b></div>
-                                            <button type="button" class="btn btn-primary btn-align-right">View</button>
-                                        </div>
-                                </li>
-                            </div>
-
-                            <div class="card mb-3" style="width: 1000px;height:80px;background:#F0F0F0;padding:5px;">
-                                <li class="d-flex justify-content-between">
-                                    <div class="d-flex flex-row align-items-center"><i
-                                            class="fa fa-check-circle checkicon"></i>
-                                        <div class="ml-2">
-                                            <h6 class="mb-0">Name</h6>
-                                            <div class="d-flex flex-row mt-1 text-black-50 date-time">
-                                                <div><i class="fa fa-calendar-o"></i><span class="ml-2">22 May 2020
-                                                        11:30 PM</span></div>
-                                                <div class="ml-3"><i class="fa fa-clock-o"></i><span
-                                                        class="ml-2">6h</span></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-row align-items-center">
-                                        <div class="d-flex flex-column mr-2">
-                                            <div><b>Application ID</b></div>
-                                            <button type="button" class="btn btn-primary btn-align-right">View</button>
-                                        </div>
-                                </li>
-                            </div>
-
-                            <div class="card mb-3" style="width: 1000px;height:80px;background:#F0F0F0;padding:5px;">
-                                <li class="d-flex justify-content-between">
-                                    <div class="d-flex flex-row align-items-center"><i
-                                            class="fa fa-check-circle checkicon"></i>
-                                        <div class="ml-2">
-                                            <h6 class="mb-0">Name</h6>
-                                            <div class="d-flex flex-row mt-1 text-black-50 date-time">
-                                                <div><i class="fa fa-calendar-o"></i><span class="ml-2">22 May 2020
-                                                        11:30 PM</span></div>
-                                                <div class="ml-3"><i class="fa fa-clock-o"></i><span
-                                                        class="ml-2">6h</span></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-row align-items-center">
-                                        <div class="d-flex flex-column mr-2">
-                                            <div><b>Application ID</b></div>
-                                            <button type="button" class="btn btn-primary btn-align-right">View</button>
-                                        </div>
-                                </li>
-                            </div>
+                        <ul class="list list-inline" id="list-container">
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script src="/static/js/utils.js"></script>
+    <script src="	https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script>
+        function toggleActive(current) {
+            $("#tabs li .active").removeClass("active");
+            $(current).addClass("active");
+        }
+
+        $(document).ready(function () {
+            $("#tabs li").click(function () {
+                event.preventDefault();
+                toggleTab(event.target);
+            });
+
+            toggleTab("[data-name=pending]");
+        });
+
+        function toggleTab(element) {
+            element = $(element);
+            if (element.length && !element.hasClass("active")) {
+                const status = element.data("name");
+                $.ajax({
+                    "url": "/student_regitrations/",
+                    "data": { status },
+                    "method": "GET",
+                    success: (res) => {
+                        // console.log(res);
+                        renderData(res);
+                        toggleActive(element);
+                    },
+                    error: (err) => {
+                        console.log(err.responseJSON)
+                        console.log(err.responseText)
+                        if (res.responseJSON) {
+                            alert(JSON.stringify(res.responseJSON));
+                        } else {
+                            alert("something went wrong!");
+                        }
+                    }
+                })
+            }
+        }
+
+
+        function renderData(data = []) {
+            const data_html = data.map(el => {
+                const { user } = el;
+                return (`<div class="card mb-3" style="width: 1000px;height:80px;background:#F0F0F0;padding:5px;">
+                    <li class="d-flex justify-content-between">
+                        <div class="d-flex flex-row align-items-center"><i
+                                class="fa fa-check-circle checkicon"></i>
+                            <div class="ml-2">
+                                <h6 class="mb-0">${user.name}</h6>
+                                <div class="d-flex flex-row mt-1 text-black-50 date-time">
+                                    <div><i class="fa fa-calendar-o"></i><span class="ml-2">
+                                        ${(new Date(el.last_update)).toLocaleString()}
+                                        </span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row align-items-center">
+                            <div class="d-flex flex-column mr-2">
+                                <div>Application ID <b>${el.application_id}</b></div>
+                                <button type="button" data-toggle="modal" data-target="#user-${el.id}" class="btn btn-primary btn-align-right">
+                                    View
+                                </button>
+                            </div>
+                        </div>
+                        ${getModalElement(el)}
+                    </li>
+                </div>`);
+
+            });
+            $("#list-container").html(data_html);
+        }
+
+
+        function getModalElement(data) {
+            return (`
+            <div class="modal fade" id="user-${data.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="contact-info-section margin-40px-tb">
+                                <ul class="list-style9 no-margin">
+                                    ${getModalLi("Application ID", data.application_id)}
+                                    ${getModalLi("Full Name", data.user.name)}
+                                    ${getModalLi("Email", data.user.email)}
+                                    ${getModalLi("Aadhar/Passport", data.aadhar)}
+                                    ${getModalLi("Gender", data.gender)}
+                                    ${getModalLi("Department", data.department)}
+                                    ${getModalLi("Specialization", data.specialization)}
+                                    ${getModalLi("PWD", data.pwd ? "Yes" : "No")}
+                                    ${getModalLi("Document", '<a href=' + data.documents + '>Link</a>')}
+                                    ${getModalLi("Image", '<a href=' + data.user.image + '>Link</a>')}
+                                </ul>
+                                
+                                <form class="p-4">
+                                    <input class="form-control" type="text" name="reason" placeholder="Reason">
+                                    
+                                    <button type="submit" class="btn btn-danger mt-2" data-id="${data.id}">Reject</button>
+                                </form>
+
+                                <form class="p-4">
+                                    <input class="form-control" type="text" name="registration_number" placeholder="Regitration Number">
+                                    <button type="submit" class="btn btn-primary mt-2" data-id="${data.id}">Accept</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `)
+        }
+
+        function getModalLi(key, value) {
+            return (`
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-md-5 col-5"> <i class="fas fa-graduation-cap text-orange"></i> <strong
+                            class="margin-10px-left text-orange">${key}:</strong></div>
+                    <div class="col-md-7 col-7">
+                        <p>${value}</p>
+                    </div>
+                </div>
+            </li>
+            `)
+        }
+    </script>
 </body>
 
 </html>
