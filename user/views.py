@@ -1,4 +1,3 @@
-import re
 from django.contrib.auth import login as login_user
 from django.contrib.auth import logout as logout_user
 from django.contrib.auth.decorators import login_required
@@ -159,7 +158,9 @@ class StudentRegistrationView(ListAPIView):
 
     def get_queryset(self):
         status = self.request.query_params.get("status", "")
-        return StudentRegistration.objects.filter(status__in=status.split(","))
+        return StudentRegistration.objects.filter(
+            status__in=status.split(",")
+        ).order_by("-last_update")
 
 
 class StudentUpdateView(RetrieveUpdateAPIView):

@@ -173,7 +173,7 @@ class StudentRegistration(models.Model):
 
 
 def get_expire_time():
-    return timezone.now() + timedelta(minutes=2)
+    return timezone.now() + timedelta(minutes=3)
 
 
 def get_otp():

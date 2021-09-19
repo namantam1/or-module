@@ -11,6 +11,11 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css"
         crossorigin="anonymous">
     <link rel="stylesheet" href="/static/css/admin.css">
+    <style>
+        .modal-dialog {
+            min-width: 75%;
+        }
+    </style>
 
 </head>
 
@@ -135,7 +140,7 @@
             })
         }
 
-        
+
         function toggleTab(element) {
             element = $(element);
             if (element.length && !element.hasClass("active")) {
@@ -164,9 +169,18 @@
 
 
         function renderData(data = []) {
-            const data_html = data.map(el => {
-                const { user } = el;
-                return (`<div class="card mb-3" style="width: 1000px;height:80px;background:#F0F0F0;padding:5px;">
+            let data_html = (`
+            <div class="card mb-3" style="max-width: 1000px;height:80px;background:#F0F0F0;padding:5px;">
+                <li class="d-flex justify-content-between m-auto">
+                    No Data!
+                </li>
+            </div>`);
+
+
+            if (data.length) {
+                data_html = data.map(el => {
+                    const { user } = el;
+                    return (`<div class="card mb-3" style="max-width: 1000px;height:80px;background:#F0F0F0;padding:5px;">
                     <li class="d-flex justify-content-between">
                         <div class="d-flex flex-row align-items-center"><i
                                 class="fa fa-check-circle checkicon"></i>
@@ -190,8 +204,10 @@
                         ${getModalElement(el)}
                     </li>
                 </div>`);
+                });
+            }
 
-            });
+
             $("#list-container").html(data_html);
         }
 
@@ -216,23 +232,16 @@
                                     ${getModalLi("Email", data.user.email)}
                                     ${getModalLi("Aadhar/Passport", data.aadhar)}
                                     ${getModalLi("Gender", data.gender)}
+                                    ${getModalLi("Date of birth", data.dob)}
                                     ${getModalLi("Department", data.department)}
                                     ${getModalLi("Specialization", data.specialization)}
                                     ${getModalLi("PWD", data.pwd ? "Yes" : "No")}
+                                    ${getModalLi("Address", data.address)}
                                     ${getModalLi("Document", '<a href=' + data.documents + '>Link</a>')}
                                     ${getModalLi("Image", '<a href=' + data.user.image + '>Link</a>')}
                                 </ul>
                                 
-                                <form class="p-4 reject-form" onsubmit="reject()" data-id="${data.id}">
-                                    <input class="form-control" type="text" name="reason" placeholder="Reason">
-                                    
-                                    <button type="submit" class="btn btn-danger mt-2" data-id="${data.id}">Reject</button>
-                                </form>
-
-                                <form class="p-4" onsubmit="accept()" data-id="${data.id}">
-                                    <input class="form-control" type="text" name="registration_number" placeholder="Regitration Number">
-                                    <button type="submit" class="btn btn-primary mt-2" data-id="${data.id}">Accept</button>
-                                </form>
+                                ${data.status == "pending" ? getForm(data) : ''}
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -241,6 +250,21 @@
                     </div>
                 </div>
             </div>
+            `)
+        }
+
+        function getForm(data) {
+            return (`
+            <form class="p-4 reject-form" onsubmit="reject()" data-id="${data.id}">
+                <input class="form-control" type="text" name="reason" placeholder="Reason">
+                
+                <button type="submit" class="btn btn-danger mt-2" data-id="${data.id}">Reject</button>
+            </form>
+
+            <form class="p-4" onsubmit="accept()" data-id="${data.id}">
+                <input class="form-control" type="text" name="registration_number" placeholder="Regitration Number">
+                <button type="submit" class="btn btn-primary mt-2" data-id="${data.id}">Accept</button>
+            </form>
             `)
         }
 

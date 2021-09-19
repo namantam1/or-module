@@ -149,17 +149,14 @@
                         <div class="d-flex align-items-center mt-2">
                             <div class="col-md-6 mt-md-0 mt-3" style="width: 50%;height: 39.5px; margin-bottom: 20px;">
                                 <label>Documents</label>
-                                {% if student.documents %}
-                                <a href="{{student.documents.url}}" target="_blank">current</a>
-                                {% endif %}
+                                <a href="{% if student.documents %}{{student.documents.url}}{% endif %}" target="_blank">current</a>
                                 <input name="documents" type="file" class="form-control" accept=".pdf">
                             </div>
                             <div class="col-md-6 mt-md-0 mt-3"
                             style="width: 700px;height: 39.5px; margin-bottom: 20px;">
                             <label>Passport Photo</label>
-                                {% if user.image %}
-                                <a href="{{user.image.url}}" target="_blank">current</a>
-                                {% endif %}
+                                
+                                <a href="{% if user.image %}{{user.image.url}}{% endif %}" target="_blank">current</a>
                                 <input name="image" type="file" class="form-control" accept="image/png, image/jpeg">
                             </div>
                         </div>
