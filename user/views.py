@@ -39,6 +39,8 @@ from user.serializer import (
 
 
 def home(request):
+    if request.user.is_authenticated:
+        return redirect("register")
     return render(request, "index.html")
 
 def logout(request):
