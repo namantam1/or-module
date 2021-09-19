@@ -75,6 +75,7 @@ class StudentRegistrationSerializer(serializers.ModelSerializer):
             "last_update",
             "user",
             "application_id",
+            "registration_number",
             "status",
         ]
 

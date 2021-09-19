@@ -227,6 +227,8 @@
                         <div class="modal-body">
                             <div class="contact-info-section margin-40px-tb">
                                 <ul class="list-style9 no-margin">
+                                    ${data.status == "accepted" ? getModalLi("Registration Number", data.registration_number) : ''}
+
                                     ${getModalLi("Application ID", data.application_id)}
                                     ${getModalLi("Full Name", data.user.name)}
                                     ${getModalLi("Email", data.user.email)}
