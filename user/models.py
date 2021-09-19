@@ -17,7 +17,7 @@ import secrets
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, password=None, **kwargs):
+    def create_user(self, email=None, password=None, **kwargs):
         """
         Creates and saves a User with the given email, date of
         birth and password.
@@ -141,6 +141,7 @@ class StudentRegistration(models.Model):
         null=True,
     )
     notes = models.TextField(null=True, blank=True)
+    reason = models.TextField(null=True, blank=True)
     status = models.CharField(max_length=20, choices=STATUS, default="pending")
     created_on = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)

@@ -1,3 +1,4 @@
+from django.utils.functional import empty
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from django.core.mail import send_mail
@@ -11,15 +12,16 @@ class SpecializationSerializer(serializers.ModelSerializer):
         model = Specialization
         fields = "__all__"
 
+
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField()
 
     def validate(self, attrs):
-        user = User.objects.filter(email=attrs['email']).first()
-        if user and user.is_active and user.check_password(attrs['password']):
+        user = User.objects.filter(email=attrs["email"]).first()
+        if user and user.is_active and user.check_password(attrs["password"]):
             return user
-        
+
         raise serializers.ValidationError("Invalid email or password")
 
 
@@ -38,10 +40,8 @@ class RegisterSerializer(serializers.Serializer):
             raise serializers.ValidationError({"password2": "password did not match"})
 
         with transaction.atomic():
-            # This code executes inside a transaction.
-            user = User(**attrs)
-            user.set_password(password1)
-            user.save()
+            print(password1)
+            user = User.objects.create_user(**attrs, password=password1)
 
             # send otp mail
             OTP.send_otp(user)
@@ -66,7 +66,8 @@ class UserSerializer(serializers.ModelSerializer):
 
 class StudentRegistrationSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
-    image = serializers.ImageField(write_only=True)
+    image = serializers.ImageField(write_only=True, required=False)
+    name = serializers.CharField(write_only=True)
 
     class Meta:
         model = StudentRegistration
@@ -81,13 +82,35 @@ class StudentRegistrationSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         image = validated_data.pop("image", None)
+        name = validated_data.pop("name", None)
         res = super().create(validated_data)
 
+        user = res.user
         if image:
-            user = res.user
             user.image = image
+        if name:
+            user.image = image
+        if user or image:
             user.save()
 
+        return res
+
+    def update(self, instance, validated_data):
+        # print(validated_data)
+        image = validated_data.pop("image", None)
+        name = validated_data.pop("name", None)
+
+        res = super().update(instance, validated_data)
+        res.status = "pending"
+        res.save()
+
+        user = res.user
+        if image:
+            user.image = image
+        if name:
+            user.image = image
+        if user or image:
+            user.save()
         return res
 
 

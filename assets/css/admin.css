@@ -214,7 +214,7 @@ h3{
 	right:20px;
 	top:10px;
 }
-#sub {
+select {
     display: block;
     width: 100%;
     border: 1px solid #ddd;
@@ -223,7 +223,7 @@ h3{
     color: #333;
 }
 
-#sub:focus {
+select:focus {
     outline: none;
 }
 

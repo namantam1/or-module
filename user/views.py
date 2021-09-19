@@ -43,9 +43,11 @@ def home(request):
         return redirect("register")
     return render(request, "index.html")
 
+
 def logout(request):
     logout_user(request)
     return redirect("login")
+
 
 class LoginView(GenericAPIView):
     serializer_class = LoginSerializer
@@ -64,6 +66,7 @@ class LoginView(GenericAPIView):
         login_user(request, user)
         return Response({}, 200)
 
+
 class Register(GenericAPIView):
     serializer_class = RegisterSerializer
 
@@ -72,11 +75,8 @@ class Register(GenericAPIView):
         form = 1
 
         if user.is_authenticated:
-            if user.is_staff:
+            if user.is_staff or hasattr(user, "studentregistration"):
                 return redirect("dashboard")
-
-            if hasattr(user, "studentregistration"):
-                return render(request, "dashboard.html")
 
             elif user.email_verified:
                 form = 3
@@ -104,7 +104,18 @@ def dashboard(request):
     if request.user.is_staff:
         return render(request, "admin_dashboard.html")
     else:
-        return render(request, "dashboard.html")
+        student = request.user.studentregistration
+        data = {
+            "user": request.user,
+            "student": student,
+            "departments": Department.objects.all(),
+            "categories": Category.objects.all(),
+            "specializations": Specialization.objects.filter(
+                department__value=student.department
+            ),
+        }
+
+        return render(request, "dashboard.html", context=data)
 
 
 @api_view(["POST"])
@@ -127,7 +138,7 @@ def resend_otp(request):
     return Response("Something went wrong", 400)
 
 
-class StudentRegistrationView(RetrieveAPIView):
+class StudentRegistrationView(ListAPIView):
     permission_classes = [IsAdminUser]
     serializer_class = StudentRegistrationSerializer
 
@@ -137,12 +148,11 @@ class StudentUpdateView(RetrieveUpdateAPIView):
     serializer_class = StudentRegistrationSerializer
 
     def get_object(self):
+        # print(self.request.data)
         return get_object_or_404(
             StudentRegistration.objects.all(), user=self.request.user
         )
 
-    def update(self, request, *args, **kwargs):
-        return super().update(request, *args, **kwargs)
 
 class StudentCreateView(CreateAPIView):
     permission_classes = [IsAuthenticated]

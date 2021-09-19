@@ -27,6 +27,11 @@ urlpatterns = [
         StudentCreateView.as_view(),
         name="student_register",
     ),
+    path(
+        "student_update/",
+        StudentUpdateView.as_view(),
+        name="student_update",
+    ),
     path("upload_file/", UploadFileView.as_view(), name="upload_file"),
     path(
         "specialization/<str:department>/",

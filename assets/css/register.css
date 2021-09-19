@@ -13,7 +13,7 @@ p {
 
 #heading {
   text-transform: uppercase;
-  color: #673ab7;
+  color: #01062a;
   font-weight: normal;
 }
 
@@ -67,13 +67,13 @@ p {
   -moz-box-shadow: none !important;
   -webkit-box-shadow: none !important;
   box-shadow: none !important;
-  border: 1px solid #673ab7;
+  border: 1px solid #01062a;
   outline-width: 0;
 }
 
 #msform .action-button {
   width: 100px;
-  background: #673ab7;
+  background: #01062a;
   font-weight: bold;
   color: white;
   border: 0 none;
@@ -86,11 +86,11 @@ p {
 
 #msform .action-button:hover,
 #msform .action-button:focus {
-  background-color: #311b92;
+  background-color: #01062a;
 }
 
 #msform .action-button-previous {
-  width: 100px;
+  width: 110px;
   background: #616161;
   font-weight: bold;
   color: white;
@@ -120,14 +120,14 @@ button[disabled] {
 
 .fs-title {
   font-size: 25px;
-  color: #673ab7;
+  color: #01062a;
   margin-bottom: 15px;
   font-weight: normal;
   text-align: left;
 }
 
 .purple-text {
-  color: #673ab7;
+  color: #01062a;
   font-weight: normal;
 }
 
@@ -151,7 +151,7 @@ button[disabled] {
 }
 
 #progressbar .active {
-  color: #673ab7;
+  color: #01062a;
 }
 
 #progressbar li {
@@ -209,7 +209,7 @@ button[disabled] {
 
 #progressbar li.active:before,
 #progressbar li.active:after {
-  background: #673ab7;
+  background: #01062a;
 }
 
 .progress {
@@ -217,10 +217,154 @@ button[disabled] {
 }
 
 .progress-bar {
-  background-color: #673ab7;
+  background-color: #01062a;
 }
 
 .fit-image {
   width: 100%;
   object-fit: cover;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: linear-gradient(to right, #01062a, #004e92);
+  min-height: 100vh;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+h3 {
+  text-align: center;
+}
+
+.wrapper {
+  max-width: 80%;
+  margin: 80px auto;
+  padding: 30px 45px;
+  box-shadow: 5px 25px 35px #3535356b;
+}
+.wrapper label {
+  display: block;
+  padding-bottom: 0.2rem;
+}
+
+.wrapper .form .row {
+  padding: 0.6rem 0;
+}
+
+.wrapper .form .row .form-control {
+  box-shadow: none;
+}
+
+.wrapper .form .option {
+  position: relative;
+  padding-left: 16px;
+  cursor: pointer;
+}
+
+.wrapper .form .option input {
+  opacity: 0;
+}
+
+.wrapper .form .checkmark {
+  position: absolute;
+  top: 1px;
+  left: 2px;
+  height: 20px;
+  width: 20px;
+  border: 1px solid #bbb;
+  border-radius: 50%;
+}
+
+.wrapper .form .option input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.wrapper .form .option:hover .checkmark {
+  background: #f3f3f3;
+}
+
+.wrapper .form .option .checkmark:after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  display: block;
+  background: linear-gradient(to right, #01062a, #004e92);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: 300ms ease-in-out 0s;
+}
+
+.wrapper .form .option input[type="radio"]:checked ~ .checkmark {
+  background: #fff;
+  transition: 300ms ease-in-out 0s;
+}
+
+.wrapper .form .option input[type="radio"]:checked ~ .checkmark:after {
+  transform: translate(-50%, -50%) scale(1);
+}
+.logout {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+}
+#sub {
+  display: block;
+  width: 100%;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+  color: #333;
+}
+
+#sub:focus {
+  outline: none;
+}
+
+@media (max-width: 768.5px) {
+  .wrapper {
+    margin: 30px;
+  }
+
+  .wrapper .form .row {
+    padding: 0;
+  }
+}
+
+@media (max-width: 400px) {
+  .wrapper {
+    padding: 25px;
+    margin: 20px;
+  }
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");
+
+.card .b {
+  color: #c0c0c0;
+  border-radius: 30px;
+  padding: 20px;
+  margin: auto;
+}
+card:hover {
+  background-color: #29c68c;
+}
+body {
+  font-family: "Open Sans", sans-serif;
+}
+.flex-item-right {
+  flex: 500%;
 }
