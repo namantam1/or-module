@@ -10,7 +10,6 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css"
         crossorigin="anonymous">
-    <!-- <link href="/static/css/style.css" rel="stylesheet" /> -->
     <link rel="stylesheet" href="/static/css/register.css" />
 </head>
 
@@ -20,7 +19,7 @@
             <div class="row justify-content-center">
                 <div class="col-11 col-sm-9 col-md-7 col-lg-6 col-xl-5 text-center p-0 mt-3 mb-2">
                     <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
-                        <h2 id="heading">Registeration Form</h2>
+                        <h2 id="heading">Registration Form</h2>
                         <p>Fill all form field to go to next step</p>
                         <div id="msform">
                             <!-- progressbar -->
@@ -153,17 +152,17 @@
                                             <option value="">-</option>
                                         </select>
 
-                                        <label class="fieldlabels">PWD:</label>
+                                        <label class="fieldlabels">PWD: *</label>
                                         <select required name="pwd" id="pwd">
                                             <option value="">-</option>
                                             <option value="true">Yes</option>
                                             <option value="false">No</option>
                                         </select>
 
-                                        <label class="fieldlabels">Upload Your Photo:</label>
+                                        <label class="fieldlabels">Upload Your Photo: *</label>
                                         <input required type="file" name="image" accept="image/*,">
 
-                                        <label class="fieldlabels">Upload documents in a single PDF:</label>
+                                        <label class="fieldlabels">Upload documents in a single PDF: *</label>
                                         <input type="file" name="documents" accept=".pdf">
 
                                         <label class="fieldlabels">Notes: </label>
@@ -208,6 +207,7 @@
     </section>
 
 
+    <script src="/static/js/utils.js"></script>
     <script src="	https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -368,7 +368,7 @@
 
         function startTimer() {
             const element = $("#timer");
-            let counter = 10;
+            let counter = 180;
             $("#resend-otp-btn").attr("disabled", true);
             element.show().children('span').text(counter);
 
@@ -382,16 +382,6 @@
                     $("#resend-otp-btn").removeAttr("disabled");
                 }
             }, 1000)
-        }
-
-        function setBtnLoading(btn) {
-            $(btn).attr("disabled", true);
-            $(btn).html(`<span class="spinner-border spinner-border-sm" role="status"
-                                        aria-hidden="true"></span>`);
-        }
-        function unSetBtnLoading(btn, text = "Next") {
-            $(btn).removeAttr("disabled")
-            $(btn).html(text);
         }
 
         function moveNext(ele) {
@@ -474,22 +464,6 @@
             percent = percent.toFixed();
             $(".progress-bar")
                 .css("width", percent + "%")
-        }
-
-        function getCookie(name = "csrftoken") {
-            let cookieValue = null;
-            if (document.cookie && document.cookie !== '') {
-                const cookies = document.cookie.split(';');
-                for (let i = 0; i < cookies.length; i++) {
-                    const cookie = cookies[i].trim();
-                    // Does this cookie string begin with the name we want?
-                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
-            }
-            return cookieValue;
         }
 
         $(document).ready(function () {

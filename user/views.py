@@ -22,13 +22,14 @@ from user.models import (
     User,
 )
 
-from django.contrib.auth import login as login_user
+from django.contrib.auth import login as login_user, logout as logout_user
 
 from django.core.files.storage import default_storage
 
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 
 from user.serializer import (
+    LoginSerializer,
     SpecializationSerializer,
     StudentRegistrationSerializer,
     UploadFileSerializer,
@@ -40,14 +41,26 @@ from user.serializer import (
 def home(request):
     return render(request, "index.html")
 
+def logout(request):
+    logout_user(request)
+    return redirect("login")
 
-def login(request):
-    return render(request, "login.html")
+class LoginView(GenericAPIView):
+    serializer_class = LoginSerializer
 
+    def get(self, request):
+        # redirect to register view to check completion of form
+        if request.user.is_authenticated:
+            return redirect("register")
 
-def register(request):
-    pass
+        return render(request, "login.html")
 
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(True)
+        user = serializer.validated_data
+        login_user(request, user)
+        return Response({}, 200)
 
 class Register(GenericAPIView):
     serializer_class = RegisterSerializer
@@ -58,7 +71,7 @@ class Register(GenericAPIView):
 
         if user.is_authenticated:
             if user.is_staff:
-                return render(request, "admin_dashboard.html")
+                return redirect("dashboard")
 
             if hasattr(user, "studentregistration"):
                 return render(request, "dashboard.html")
@@ -87,7 +100,7 @@ class Register(GenericAPIView):
 @login_required
 def dashboard(request):
     if request.user.is_staff:
-        return render(request, "dashboard.html")
+        return render(request, "admin_dashboard.html")
     else:
         return render(request, "dashboard.html")
 

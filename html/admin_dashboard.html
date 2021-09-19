@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/admin.css">
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <img src="/static/images/logo.png" class="img-responsive" style="height:40px;width: 100px;">
+        &nbsp;
+        &nbsp;
+        <!-- Collection of nav links, forms, and other content for toggling -->
+        <div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
+            <div class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav navbar-right" ">
+                    <li>
+	                    <button type=" submit" class="btn btn-primary logout" style="display:flex;float: right;">
+                    <a href="/logout/">Logout</a>
+                    </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="wrapper1 rounded bg-white">
+            <ul class="nav nav-pills" style="margin: 5px;">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Pending</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Accepted</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Rejected</a>
+                </li>
+            </ul>
+        </div>
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="mt-3">
+                        <ul class="list list-inline">
+                            <div class="card mb-3" style="width: 1000px;height:80px;background:#F0F0F0;padding:5px;">
+                                <li class="d-flex justify-content-between">
+                                    <div class="d-flex flex-row align-items-center"><i
+                                            class="fa fa-check-circle checkicon"></i>
+                                        <div class="ml-2">
+                                            <h6 class="mb-0">Name</h6>
+                                            <div class="d-flex flex-row mt-1 text-black-50 date-time">
+                                                <div><i class="fa fa-calendar-o"></i><span class="ml-2">22 May 2020
+                                                        11:30 PM</span></div>
+                                                <div class="ml-3"><i class="fa fa-clock-o"></i><span
+                                                        class="ml-2">6h</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-row align-items-center">
+                                        <div class="d-flex flex-column mr-2">
+                                            <div><b>Application ID</b></div>
+                                            <button type="button" class="btn btn-primary btn-align-right">View</button>
+                                        </div>
+                                </li>
+                            </div>
+
+                            <div class="card mb-3" style="width: 1000px;height:80px;background:#F0F0F0;padding:5px;">
+                                <li class="d-flex justify-content-between">
+                                    <div class="d-flex flex-row align-items-center"><i
+                                            class="fa fa-check-circle checkicon"></i>
+                                        <div class="ml-2">
+                                            <h6 class="mb-0">Name</h6>
+                                            <div class="d-flex flex-row mt-1 text-black-50 date-time">
+                                                <div><i class="fa fa-calendar-o"></i><span class="ml-2">22 May 2020
+                                                        11:30 PM</span></div>
+                                                <div class="ml-3"><i class="fa fa-clock-o"></i><span
+                                                        class="ml-2">6h</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-row align-items-center">
+                                        <div class="d-flex flex-column mr-2">
+                                            <div><b>Application ID</b></div>
+                                            <button type="button" class="btn btn-primary btn-align-right">View</button>
+                                        </div>
+                                </li>
+                            </div>
+
+                            <div class="card mb-3" style="width: 1000px;height:80px;background:#F0F0F0;padding:5px;">
+                                <li class="d-flex justify-content-between">
+                                    <div class="d-flex flex-row align-items-center"><i
+                                            class="fa fa-check-circle checkicon"></i>
+                                        <div class="ml-2">
+                                            <h6 class="mb-0">Name</h6>
+                                            <div class="d-flex flex-row mt-1 text-black-50 date-time">
+                                                <div><i class="fa fa-calendar-o"></i><span class="ml-2">22 May 2020
+                                                        11:30 PM</span></div>
+                                                <div class="ml-3"><i class="fa fa-clock-o"></i><span
+                                                        class="ml-2">6h</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-row align-items-center">
+                                        <div class="d-flex flex-column mr-2">
+                                            <div><b>Application ID</b></div>
+                                            <button type="button" class="btn btn-primary btn-align-right">View</button>
+                                        </div>
+                                </li>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

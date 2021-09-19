@@ -11,6 +11,17 @@ class SpecializationSerializer(serializers.ModelSerializer):
         model = Specialization
         fields = "__all__"
 
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField()
+
+    def validate(self, attrs):
+        user = User.objects.filter(email=attrs['email']).first()
+        if user and user.is_active and user.check_password(attrs['password']):
+            return user
+        
+        raise serializers.ValidationError("Invalid email or password")
+
 
 class RegisterSerializer(serializers.Serializer):
     email = serializers.EmailField(

@@ -1,82 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
 
-    <link href="/static/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="/static/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="/static/css/style.css" rel="stylesheet" />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
 
-    <title>Online Reporting Module</title>
-  </head>
-  <body>
-    <section class="form-08">
-      <div class="container">
-        <div class="row">
-          <div class="col-12">
-            <div class="_form-08-main-login">
-              <div class="_form-08-head-login">
-                <h2>Welcome Back To</h2>
-                <h2>Online Reporting Module</h2>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css" />
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css"
+    crossorigin="anonymous">
+  <link href="/static/css/style.css" rel="stylesheet" />
+
+  <title>Online Reporting Module</title>
+</head>
+
+<body>
+  <section class="form-08">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="_form-08-main-login">
+            <div class="_form-08-head-login">
+              <h2>Welcome Back To</h2>
+              <h2>Online Reporting Module</h2>
+            </div>
+
+            <form onsubmit="Login()">
+              <div class="form-group-login">
+                <label>Enter Your Email</label>
+                <input type="email" name="email" class="form-control" type="text" placeholder="Enter Email" required
+                  aria-required="true" />
               </div>
 
               <div class="form-group-login">
-                <label>Enter Your Application ID</label>
-                <input
-                  type="email"
-                  name="email"
-                  class="form-control"
-                  type="text"
-                  placeholder="Enter Application ID"
-                  required=""
-                  aria-required="true"
-                />
+                <label>Enter Your Password</label>
+                <input type="password" name="password" class="form-control" type="text" placeholder="Enter Password"
+                  required aria-required="true" />
               </div>
 
               <div class="form-group-login">
-                <label>Enter Your Date Of Birth</label>
-                <input
-                  type="password"
-                  name="password"
-                  class="form-control"
-                  type="text"
-                  placeholder="DDMMYYYY"
-                  required=""
-                  aria-required="true"
-                />
-              </div>
-
-              <div class="checkbox mb-0 form-group-login">
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value=""
-                    id=""
-                  />
-                  <label class="form-check-label" for=""> Remember me </label>
-                </div>
-              </div>
-
-              <div class="form-group-login">
-                <div class="_btn_04-login">
-                  <a href="#">Login</a>
-                </div>
+                <button id="login-btn" type="submit" class="btn _btn_04-login">Login</button>
                 <p>
                   Not a registered user?
-                  <a class="signup" href="/register">Sign-Up Instead!</a>
+                  <a class="signup" href="/register">Register Instead!</a>
                 </p>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>
-    </section>
-  </body>
+    </div>
+  </section>
+
+  <script src="/static/js/utils.js"></script>
+  <script src="	https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <script>
+    function Login() {
+      event.preventDefault();
+      const element = event.target;
+
+      $.ajax({
+        "url": "/login/",
+        "method": "POST",
+        headers: { 'X-CSRFTOKEN': getCookie() },
+        data: $(element).serialize(),
+        beforeSend: () => {
+          setBtnLoading("#login-btn");
+        },
+        success: (res) => {
+          console.log(res);
+        },
+        error: (err) => {
+          console.log(err.responseJSON);
+          console.log(err.responseText);
+          if (err.responseJSON) {
+            alert(JSON.stringify(err.responseJSON));
+          } else {
+            console.log(err.responseText);
+            alert("something went wrong.")
+          }
+        },
+        complete: () => {
+          unSetBtnLoading("#login-btn")
+        }
+      })
+    }
+  </script>
+</body>
+
 </html>
